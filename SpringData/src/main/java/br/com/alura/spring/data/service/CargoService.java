@@ -17,28 +17,30 @@ public class CargoService {
     }
 
     public void startService(Scanner scanner) {
-        System.out.println("[CARGO] Você deseja:");
+        limpaConsole();
+        System.out.println("Rotina selecionada: [CARGO]");
         System.out.println("0 - Sair");
-        System.out.println("1 - Cadastrar um novo cargo");
-        System.out.println("2 - Atualizar um cargo");
-        System.out.println("3 - Remover um cargo");
-        System.out.println("9 - Listar todos os cargos");
+        System.out.println("1 - Listar todos os cargos");
+        System.out.println("2 - Cadastrar um novo cargo");
+        System.out.println("3 - Atualizar um cargo");
+        System.out.println("4 - Remover um cargo");
         int opcao = scanner.nextInt();
         switch(opcao) {
             case 1:
+                imprimeCargos();
+                System.out.println("Pressione qualquer tecla prosseguida por [Enter] para continuar");
+                scanner.next();
+            break;
+            case 2:
                 cadastrar(scanner);
             break;
-            case 2: 
+            case 3:
                 atualizar(scanner);
             break;
-            case 3:
+            case 4:
                 remover(scanner);
             break;
-            case 9:
-                imprimeCargos();
-            break;
         }
-        scanner.next();
     }
 
     public void cadastrar(Scanner scanner) {
@@ -55,19 +57,6 @@ public class CargoService {
         imprimeCargos();
         System.out.println();
         System.out.println("Digite a ID do cargo pretendente:");
-        atualizaCargo(scanner);
-    }
-
-    public void remover(Scanner scanner) {
-        System.out.println("[CARGO] Você selecionou a opção para excluir um cargo.");
-        System.out.println("Qual cargo você deseja excluir?");
-        imprimeCargos();
-        System.out.println();
-        System.out.println("Digite a ID do cargo pretendente:");
-        removeCargo(scanner);
-    }
-
-    public void atualizaCargo(Scanner scanner) {
         Cargo cargo = this.repository.findById(scanner.nextInt()).get();
         System.out.println("Digite o novo nome da categoria:");
         cargo.setDescricao(scanner.next());
@@ -78,7 +67,12 @@ public class CargoService {
         scanner.next();
     }
 
-    public void removeCargo(Scanner scanner) {
+    public void remover(Scanner scanner) {
+        System.out.println("[CARGO] Você selecionou a opção para excluir um cargo.");
+        System.out.println("Qual cargo você deseja excluir?");
+        imprimeCargos();
+        System.out.println();
+        System.out.println("Digite a ID do cargo pretendente:");
         Cargo cargo = this.repository.findById(scanner.nextInt()).get();
         this.repository.delete(cargo);
         System.out.println();
@@ -92,6 +86,10 @@ public class CargoService {
             String text = String.format("%s - %s", cargo.getId(), cargo.getDescricao());
             System.out.println(text);
         });
+    }
+
+    private void limpaConsole() {
+        System.out.print("\033[H\033[2J");
     }
 
 }

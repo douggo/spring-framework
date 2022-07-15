@@ -7,16 +7,28 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 import br.com.alura.spring.data.service.CargoService;
+import br.com.alura.spring.data.service.FuncionarioService;
+import br.com.alura.spring.data.service.UnidadeService;
 
 @SpringBootApplication
 public class SpringDataApplication implements CommandLineRunner {
 
+	private Scanner scanner = new Scanner(System.in);
 	private Boolean isSystemRunning = true;
 
-	private final CargoService service;
+	private final CargoService cargoService;
+	private final UnidadeService unidadeService;
+	private final FuncionarioService funcionarioService;
 
-	public SpringDataApplication(CargoService cargoService) {
-		this.service = cargoService;
+	public SpringDataApplication(
+		CargoService cargoService, 
+		UnidadeService unidadeService, 
+		FuncionarioService funcionarioService
+	)
+	{
+		this.cargoService = cargoService;
+		this.unidadeService = unidadeService;
+		this.funcionarioService = funcionarioService;
 	}
 
 	public static void main(String[] args) {
@@ -26,21 +38,33 @@ public class SpringDataApplication implements CommandLineRunner {
 	@Override
 	public void run(String... args) throws Exception {
 		System.out.println();
-		Scanner scanner = new Scanner(System.in);
 		while(isSystemRunning) {
-			limpaConsole();
-			System.out.println("Qual ação você deseja realizar?");
-			System.out.println("0 - SAIR");
-			System.out.println("1 - CARGO");
-			acao(scanner);
+			imprimeOpcoes(scanner);
 		}
 	}
 
-	private void acao(Scanner scanner) {
+	private void imprimeOpcoes(Scanner scanner) {
+		limpaConsole();
+		System.out.println("Qual ação você deseja realizar?");
+		System.out.println("0 - SAIR");
+		System.out.println("1 - CARGO");
+		System.out.println("2 - UNIDADE");
+		System.out.println("3 - FUNCIONÁRIO");
+		processaAcao();
+	}
+
+	private void processaAcao() {
 		switch(scanner.nextInt()) {
 			case 1:
-				this.service.startService(scanner);
+				this.cargoService.startService(scanner);
 			break;
+			case 2:
+				this.unidadeService.startService(scanner);
+			break;
+			case 3:
+				this.funcionarioService.startService(scanner);
+			break;
+			case 0:
 			default:
 				this.isSystemRunning = false;
 			break;
@@ -49,7 +73,6 @@ public class SpringDataApplication implements CommandLineRunner {
 
 	private void limpaConsole() {
         System.out.print("\033[H\033[2J");
-        System.out.flush();
     }
 
 }
