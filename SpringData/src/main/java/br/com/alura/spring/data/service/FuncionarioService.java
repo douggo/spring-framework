@@ -5,6 +5,10 @@ import java.time.LocalDate;
 import java.util.Optional;
 import java.util.Scanner;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import br.com.alura.spring.data.orm.Funcionario;
@@ -41,7 +45,7 @@ public class FuncionarioService {
         int opcao = scanner.nextInt();
         switch(opcao) {
             case 1:
-                imprimeFuncionarios();
+                imprimeFuncionariosPaginado(scanner);
                 System.out.println("Pressione qualquer tecla prosseguida por [Enter] para continuar");
                 scanner.next();
             break;
@@ -55,6 +59,17 @@ public class FuncionarioService {
                 remover(scanner);
             break;
         }
+    }
+
+    private void imprimeFuncionariosPaginado(Scanner scanner) {
+        System.out.println("Informe a página que você deseja acessar:");
+        Pageable page = PageRequest.of(scanner.nextInt(), 5, Sort.by(Sort.Direction.ASC, "salario"));
+        Page<Funcionario> funcionarios = this.repository.findAll(page);
+        System.out.println();
+        System.out.println("Página atual: " + funcionarios.getNumber() + "/" + (funcionarios.getTotalPages() - 1));
+        funcionarios.forEach(funcionario -> System.out.println(funcionario));
+        System.out.println();
+        System.out.println("Registros encontrados: " + funcionarios.getTotalElements());
     }
 
     private void imprimeFuncionarios() {
