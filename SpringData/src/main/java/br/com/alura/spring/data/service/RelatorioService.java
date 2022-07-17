@@ -25,7 +25,8 @@ public class RelatorioService {
         System.out.println("Rotina selecionada: [RELATÓRIOS]");
         System.out.println("0 - Sair");
         System.out.println("1 - Pesquisar todos os funcionários por {NOME}");
-        System.out.println("2 - Pesquisar por {NOME}, {SALARIO}, {DATA DA CONTRATAÇÃO}");
+        System.out.println("2 - Pesquisar por {NOME}, {SALÁRIO}, {DATA DA CONTRATAÇÃO}");
+        System.out.println("3 - Lista {SALÁRIO} dos funcionários");
         int opcao = scanner.nextInt();
         switch(opcao) {
             case 1:
@@ -33,6 +34,10 @@ public class RelatorioService {
             break;
             case 2:
                 imprimeFuncionariosPorNomeSalarioData(scanner);
+            break;
+            case 3:
+                imprimeSalarioFuncionarios();
+                scanner.next();
             break;
         }
     }
@@ -61,6 +66,16 @@ public class RelatorioService {
         funcionarios.forEach(funcionario -> System.out.println(funcionario));
         System.out.println("Pressione qualquer tecla seguindo de [Enter] para continuar.");
         scanner.next();
+    }
+
+    private void imprimeSalarioFuncionarios() {
+        limpaConsole();
+        System.out.println("Listando todos os funcionários e seus salários...");
+        String text = "Funcionário %s: %s | R$ %s %n";
+        this.repository.findFuncionarioProjecao().forEach(
+            f -> System.out.format(text, f.getId(), f.getNome(), f.getSalario())
+        );
+        System.out.println("Pressione qualquer tecla seguido por [Enter] para continuar.");
     }
 
     private void limpaConsole() {
