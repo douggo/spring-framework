@@ -13,6 +13,8 @@ import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 
+import br.com.alura.forum.model.builder.TopicoBuilder;
+
 @Entity
 public class Topico {
 
@@ -34,6 +36,21 @@ public class Topico {
 
 	@OneToMany(mappedBy = "topico")
 	private List<Resposta> respostas = new ArrayList<>();
+
+	public Topico() {
+
+	}
+
+	public Topico(TopicoBuilder topicoBuilder) {
+		this.id = topicoBuilder.id;
+		this.titulo = topicoBuilder.titulo;
+		this.mensagem = topicoBuilder.mensagem;
+		this.dataCriacao = topicoBuilder.dataCriacao;
+		this.status = topicoBuilder.status;
+		this.autor = topicoBuilder.autor;
+		this.curso = topicoBuilder.curso;
+		this.respostas = topicoBuilder.respostas;
+	}
 
 	@Override
 	public int hashCode() {
