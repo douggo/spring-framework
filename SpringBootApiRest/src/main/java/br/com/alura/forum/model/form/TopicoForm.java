@@ -6,7 +6,6 @@ import javax.validation.constraints.NotNull;
 import org.hibernate.validator.constraints.Length;
 
 import br.com.alura.forum.model.Topico;
-import br.com.alura.forum.model.builder.TopicoBuilder;
 import br.com.alura.forum.repository.CursoRepository;
 
 public class TopicoForm {
@@ -43,11 +42,13 @@ public class TopicoForm {
     }
 
     public Topico converter(CursoRepository cursoRepository) {
-        TopicoBuilder topicoBuilder = new TopicoBuilder();
-        topicoBuilder.titulo(this.titulo);
-        topicoBuilder.mensagem(this.mensagem);
-        topicoBuilder.curso(cursoRepository.findByNome(this.nomeCurso));
-        return topicoBuilder.build();
+        return (
+            new Topico.TopicoBuilder()
+                .titulo(this.titulo)
+                .mensagem(this.mensagem)
+                .curso(cursoRepository.findByNome(nomeCurso))
+                .build()
+        );
     }
 
 }

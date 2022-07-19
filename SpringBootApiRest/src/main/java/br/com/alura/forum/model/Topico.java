@@ -13,8 +13,6 @@ import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 
-import br.com.alura.forum.model.builder.TopicoBuilder;
-
 @Entity
 public class Topico {
 
@@ -42,11 +40,8 @@ public class Topico {
 	}
 
 	public Topico(TopicoBuilder topicoBuilder) {
-		this.id = topicoBuilder.id;
 		this.titulo = topicoBuilder.titulo;
 		this.mensagem = topicoBuilder.mensagem;
-		this.dataCriacao = topicoBuilder.dataCriacao;
-		this.status = topicoBuilder.status;
 		this.autor = topicoBuilder.autor;
 		this.curso = topicoBuilder.curso;
 		this.respostas = topicoBuilder.respostas;
@@ -139,6 +134,44 @@ public class Topico {
 
 	public void setRespostas(List<Resposta> respostas) {
 		this.respostas = respostas;
+	}
+
+	public static class TopicoBuilder {
+		private String titulo;
+		private String mensagem;
+		private Usuario autor;
+		private Curso curso;
+		private List<Resposta> respostas;
+
+		public TopicoBuilder titulo(String titulo) {
+			this.titulo = titulo;
+			return this;
+		}
+	
+		public TopicoBuilder mensagem(String mensagem) {
+			this.mensagem = mensagem;
+			return this;
+		}
+	
+		public TopicoBuilder autor(Usuario autor) {
+			this.autor = autor;
+			return this;
+		}
+	
+		public TopicoBuilder curso(Curso curso) {
+			this.curso = curso;
+			return this;
+		}
+	
+		public TopicoBuilder respostas(List<Resposta> respostas) {
+			this.respostas = respostas;
+			return this;
+		}
+
+		public Topico build() {
+			Topico topico = new Topico(this);
+			return topico;
+		}
 	}
 
 }
