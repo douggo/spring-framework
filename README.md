@@ -4,7 +4,7 @@ Aqui teremos um compilado sobre o que foi estudado sobre o framework Spring, uti
 
 - [x] Spring Data
 - [ ] Spring Boot
-  - [x] API Rest
-  - [ ] Segurança, Cache e Monitoramento
-  - [ ] Profile, Testes e Deploy
+  - [x] API Rest (SpringBootAR)
+  - [ ] Segurança, Cache e Monitoramento (SpringBootSCM)
+  - [ ] Profile, Testes e Deploy (SpringBootPTD)
   
