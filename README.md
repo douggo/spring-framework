@@ -4,7 +4,7 @@ Aqui teremos um compilado sobre o que foi estudado sobre o framework Spring, uti
 
 - [x] Spring Data
 - [ ] Spring Boot
-  - [ ] API Rest
+  - [x] API Rest
   - [ ] Segurança, Cache e Monitoramento
   - [ ] Profile, Testes e Deploy
   
